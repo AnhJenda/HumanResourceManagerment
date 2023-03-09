@@ -29,8 +29,12 @@ namespace HumanResourceManagerment.Controllers
           {
               return NotFound();
           }
-            var models = from g in _context.Employee select g;
-            return await models.AsNoTracking().Where(e => e.Name.Contains(Search)).ToListAsync();
+          if(Search == null)
+            {
+                return await _context.Employee.ToListAsync();
+            }
+            
+            return await _context.Employee.AsNoTracking().Where(e => e.Name.Contains(Search)).ToListAsync();
         }
 
         // GET: api/Employees/5
